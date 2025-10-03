@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+   <link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#151515" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Useless 2048 | Play Game Online</title>
+   <meta name="description" content="">
+  <link rel="shortcut icon" href="https://kaloodinaz.github.io/2048-useless/favicon.ico">
+<link rel="apple-touch-icon" href="https://kaloodinaz.github.io/2048-reverse/apple-touch-icon.png">
+  <link rel="apple-touch-startup-image" href="https://kaloodinaz.github.io/2048-reverse/apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone 5+ -->
+  <link rel="apple-touch-startup-image" href="https://kaloodinaz.github.io/2048-reverse/apple-touch-startup-image-640x920.png"  media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone, retina -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+<meta property="og:title" content="2048 Useless"/>
+  <meta property="og:site_name" content="kaloodinaz" />
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="https://kaloodinaz.github.io/2048-useless/og-image.jpg"/>
+<style>
+html,body{margin:0;padding:0;background:#faf8ef;color:#776e65;font-family:"Clear Sans","Helvetica Neue",Arial,sans-serif;font-size:18px}
+body{margin:10px 0}
+input{display:inline-block;background:#8f7a66;border-radius:3px;padding:0 20px;text-decoration:none;color:#f9f6f2;height:40px;line-height:42px;cursor:pointer;font:inherit;border:none;outline:none;box-sizing:border-box;font-weight:700;margin:0;-webkit-appearance:none;-moz-appearance:none;appearance:none}
+input[type="text"],input[type="email"]{cursor:auto;background:#fcfbf9;font-weight:400;color:#776e65;padding:0 15px}
+input[type="text"]::-webkit-input-placeholder,input[type="email"]::-webkit-input-placeholder{color:#9d948c}
+input[type="text"]::-moz-placeholder,input[type="email"]::-moz-placeholder{color:#9d948c}
+input[type="text"]:-ms-input-placeholder,input[type="email"]:-ms-input-placeholder{color:#9d948c}
+.heading:after{content:"";display:block;clear:both}
+h1.title{font-size:40px;font-weight:700;margin:0;display:block;float:left}
+@-webkit-keyframes move-up {
+0%{top:25px;opacity:1}
+100%{top:-50px;opacity:0}
+}
+@-moz-keyframes move-up {
+0%{top:25px;opacity:1}
+100%{top:-50px;opacity:0}
+}
+@keyframes move-up {
+0%{top:25px;opacity:1}
+100%{top:-50px;opacity:0}
+}
+.scores-container{float:right;text-align:right}
+.score-container,.best-container{position:relative;display:inline-block;background:#755c44;padding:15px 25px;font-size:25px;height:25px;line-height:47px;font-weight:700;border-radius:3px;color:#fff;margin-top:8px;text-align:center}
+.score-container:after,.best-container:after{position:absolute;width:100%;top:10px;left:0;text-transform:uppercase;font-size:13px;line-height:13px;text-align:center;color:#eee4da}
+.score-container .score-addition,.best-container .score-addition{position:absolute;right:30px;color:red;font-size:25px;line-height:25px;font-weight:700;color:#776e65e6;z-index:100;-webkit-animation:move-up 600ms ease-in;-moz-animation:move-up 600ms ease-in;animation:move-up 600ms ease-in;-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;animation-fill-mode:both}
+.score-container:after{content:"Score"}
+.best-container:after{content:"Best"}
+p{margin-top:0;margin-bottom:10px;line-height:1.65}
+a{color:#776e65;font-weight:700;text-decoration:underline;cursor:pointer}
+strong.important{text-transform:uppercase}
+hr{border:none;border-bottom:1px solid #d8d4d0;margin-top:20px;margin-bottom:30px}
+.container{width:500px;margin:0 auto}
+@-webkit-keyframes fade-in {
+0%{opacity:0}
+100%{opacity:1}
+}
+@-moz-keyframes fade-in {
+0%{opacity:0}
+100%{opacity:1}
+}
+@keyframes fade-in {
+0%{opacity:0}
+100%{opacity:1}
+}
+@-webkit-keyframes slide-up {
+0%{margin-top:32%}
+100%{margin-top:20%}
+}
+@-moz-keyframes slide-up {
+0%{margin-top:32%}
+100%{margin-top:20%}
+}
+@keyframes slide-up {
+0%{margin-top:32%}
+100%{margin-top:20%}
+}
+.game-container{margin-top:40px;position:relative;padding:15px;cursor:default;-webkit-touch-callout:none;-ms-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-ms-touch-action:none;touch-action:none;background:#937253;border-radius:6px;width:500px;height:500px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+.game-message{display:none;position:absolute;top:0;right:0;bottom:0;left:0;background:#eee4daba;z-index:100;padding-top:40px;text-align:center;-webkit-animation:fade-in 800ms ease 1200ms;-moz-animation:fade-in 800ms ease 1200ms;animation:fade-in 800ms ease 1200ms;-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;animation-fill-mode:both}
+.game-message p{font-size:60px;font-weight:700;height:60px;line-height:60px;margin-top:222px}
+.game-message .lower{display:block;margin-top:29px}
+.game-message .mailing-list{margin-top:52px}
+.game-message .mailing-list strong{display:block;margin-bottom:10px}
+.game-message .mailing-list .mailing-list-email-field{width:230px;margin-right:5px}
+.game-message a{display:inline-block;background:#8f7a66;border-radius:3px;padding:0 20px;text-decoration:none;color:#f9f6f2;height:40px;line-height:42px;cursor:pointer;margin-left:9px}
+.game-message a.keep-playing-button{display:none}
+.game-message .score-sharing{display:inline-block;vertical-align:middle;margin-left:10px}
+.game-message.game-won{background:#edc22e80;color:#f9f6f2}
+.game-message.game-won a.keep-playing-button{display:inline-block}
+.game-message.game-won,.game-message.game-over{display:block}
+.game-message.game-won p,.game-message.game-over p{-webkit-animation:slide-up 1.5s ease-in-out 2500ms;-moz-animation:slide-up 1.5s ease-in-out 2500ms;animation:slide-up 1.5s ease-in-out 2500ms;-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;animation-fill-mode:both}
+.game-message.game-won .mailing-list,.game-message.game-over .mailing-list{-webkit-animation:fade-in 1.5s ease-in-out 2500ms;-moz-animation:fade-in 1.5s ease-in-out 2500ms;animation:fade-in 1.5s ease-in-out 2500ms;-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;animation-fill-mode:both}
+.grid-container{position:absolute;z-index:1}
+.grid-row{margin-bottom:15px}
+.grid-row:last-child{margin-bottom:0}
+.grid-row:after{content:"";display:block;clear:both}
+.grid-cell{width:106.25px;height:106.25px;margin-right:15px;float:left;border-radius:3px;background:#eee4da59}
+.grid-cell:last-child{margin-right:0}
+.tile-container{position:absolute;z-index:2}
+.tile,.tile .tile-inner{width:107px;height:107px;line-height:116.25px}
+.tile.tile-position-1-1{-webkit-transform:translate(0px,0px);-moz-transform:translate(0px,0px);transform:translate(0px,0px)}
+.tile.tile-position-1-2{-webkit-transform:translate(0px,121px);-moz-transform:translate(0px,121px);transform:translate(0px,121px)}
+.tile.tile-position-1-3{-webkit-transform:translate(0px,242px);-moz-transform:translate(0px,242px);transform:translate(0px,242px)}
+.tile.tile-position-1-4{-webkit-transform:translate(0px,363px);-moz-transform:translate(0px,363px);transform:translate(0px,363px)}
+.tile.tile-position-2-1{-webkit-transform:translate(121px,0px);-moz-transform:translate(121px,0px);transform:translate(121px,0px)}
+.tile.tile-position-2-2{-webkit-transform:translate(121px,121px);-moz-transform:translate(121px,121px);transform:translate(121px,121px)}
+.tile.tile-position-2-3{-webkit-transform:translate(121px,242px);-moz-transform:translate(121px,242px);transform:translate(121px,242px)}
+.tile.tile-position-2-4{-webkit-transform:translate(121px,363px);-moz-transform:translate(121px,363px);transform:translate(121px,363px)}
+.tile.tile-position-3-1{-webkit-transform:translate(242px,0px);-moz-transform:translate(242px,0px);transform:translate(242px,0px)}
+.tile.tile-position-3-2{-webkit-transform:translate(242px,121px);-moz-transform:translate(242px,121px);transform:translate(242px,121px)}
+.tile.tile-position-3-3{-webkit-transform:translate(242px,242px);-moz-transform:translate(242px,242px);transform:translate(242px,242px)}
+.tile.tile-position-3-4{-webkit-transform:translate(242px,363px);-moz-transform:translate(242px,363px);transform:translate(242px,363px)}
+.tile.tile-position-4-1{-webkit-transform:translate(363px,0px);-moz-transform:translate(363px,0px);transform:translate(363px,0px)}
+.tile.tile-position-4-2{-webkit-transform:translate(363px,121px);-moz-transform:translate(363px,121px);transform:translate(363px,121px)}
+.tile.tile-position-4-3{-webkit-transform:translate(363px,242px);-moz-transform:translate(363px,242px);transform:translate(363px,242px)}
+.tile.tile-position-4-4{-webkit-transform:translate(363px,363px);-moz-transform:translate(363px,363px);transform:translate(363px,363px)}
+.tile{position:absolute;-webkit-transition:100ms ease-in-out;-moz-transition:100ms ease-in-out;transition:100ms ease-in-out;-webkit-transition-property:-webkit-transform;-moz-transition-property:-moz-transform;transition-property:transform}
+.tile .tile-inner{border-radius:3px;background:#eee4da;text-align:center;font-weight:700;z-index:10;font-size:55px}
+@-webkit-keyframes appear {
+0%{opacity:0;-webkit-transform:scale(0);-moz-transform:scale(0);transform:scale(0)}
+100%{opacity:1;-webkit-transform:scale(1);-moz-transform:scale(1);transform:scale(1)}
+}
+@-moz-keyframes appear {
+0%{opacity:0;-webkit-transform:scale(0);-moz-transform:scale(0);transform:scale(0)}
+100%{opacity:1;-webkit-transform:scale(1);-moz-transform:scale(1);transform:scale(1)}
+}
+@keyframes appear {
+0%{opacity:0;-webkit-transform:scale(0);-moz-transform:scale(0);transform:scale(0)}
+100%{opacity:1;-webkit-transform:scale(1);-moz-transform:scale(1);transform:scale(1)}
+}
+.tile-new .tile-inner{-webkit-animation:appear 200ms ease 100ms;-moz-animation:appear 200ms ease 100ms;animation:appear 200ms ease 100ms;-webkit-animation-fill-mode:backwards;-moz-animation-fill-mode:backwards;animation-fill-mode:backwards}
+@-webkit-keyframes pop {
+0%{-webkit-transform:scale(0);-moz-transform:scale(0);transform:scale(0)}
+50%{-webkit-transform:scale(1.2);-moz-transform:scale(1.2);transform:scale(1.2)}
+100%{-webkit-transform:scale(1);-moz-transform:scale(1);transform:scale(1)}
+}
+@-moz-keyframes pop {
+0%{-webkit-transform:scale(0);-moz-transform:scale(0);transform:scale(0)}
+50%{-webkit-transform:scale(1.2);-moz-transform:scale(1.2);transform:scale(1.2)}
+100%{-webkit-transform:scale(1);-moz-transform:scale(1);transform:scale(1)}
+}
+@keyframes pop {
+0%{-webkit-transform:scale(0);-moz-transform:scale(0);transform:scale(0)}
+50%{-webkit-transform:scale(1.2);-moz-transform:scale(1.2);transform:scale(1.2)}
+100%{-webkit-transform:scale(1);-moz-transform:scale(1);transform:scale(1)}
+}
+.tile-merged .tile-inner{z-index:20;-webkit-animation:pop 200ms ease 100ms;-moz-animation:pop 200ms ease 100ms;animation:pop 200ms ease 100ms;-webkit-animation-fill-mode:backwards;-moz-animation-fill-mode:backwards;animation-fill-mode:backwards}
+.above-game:after{content:"";display:block;clear:both}
+.game-intro{float:left;line-height:42px;margin-bottom:0}
+.restart-button{display:inline-block;background:#3f2105;border-radius:3px;padding:0 20px;text-decoration:none;color:#f9f6f2;height:40px;line-height:42px;cursor:pointer;display:block;text-align:center;float:right}
+.game-explanation{margin-top:50px}
+.sharing{margin-top:20px;text-align:center}
+.sharing > iframe,.sharing > span,.sharing > form{display:inline-block;vertical-align:middle}
+@media screen and (max-width: 520px) {
+html,body{font-size:15px}
+body{margin:10px 0;padding:0 5px}
+h1.title{font-size:23px;margin-top:15px}
+.container{width:280px;margin:0 auto}
+.score-container,.best-container{margin-top:0;padding:15px 10px;min-width:40px}
+.heading{margin-bottom:10px}
+.game-intro{width:55%;display:block;box-sizing:border-box;line-height:1.65}
+.restart-button{width:42%;padding:0;display:block;box-sizing:border-box;margin-top:2px}
+.game-container{margin-top:17px;position:relative;padding:10px;cursor:default;-webkit-touch-callout:none;-ms-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-ms-touch-action:none;touch-action:none;background:#937253;border-radius:6px;width:280px;height:280px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+.game-message{display:none;position:absolute;top:0;right:0;bottom:0;left:0;background:#eee4daba;z-index:100;padding-top:40px;text-align:center;-webkit-animation:fade-in 800ms ease 1200ms;-moz-animation:fade-in 800ms ease 1200ms;animation:fade-in 800ms ease 1200ms;-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;animation-fill-mode:both}
+.game-message p{font-size:60px;font-weight:700;height:60px;line-height:60px;margin-top:222px}
+.game-message .lower{display:block;margin-top:29px}
+.game-message .mailing-list{margin-top:52px}
+.game-message .mailing-list strong{display:block;margin-bottom:10px}
+.game-message .mailing-list .mailing-list-email-field{width:230px;margin-right:5px}
+.game-message a{display:inline-block;background:#8f7a66;border-radius:3px;padding:0 20px;text-decoration:none;color:#f9f6f2;height:40px;line-height:42px;cursor:pointer;margin-left:9px}
+.game-message a.keep-playing-button{display:none}
+.game-message .score-sharing{display:inline-block;vertical-align:middle;margin-left:10px}
+.game-message.game-won{background:#edc22e80;color:#f9f6f2}
+.game-message.game-won a.keep-playing-button{display:inline-block}
+.game-message.game-won,.game-message.game-over{display:block}
+.game-message.game-won p,.game-message.game-over p{-webkit-animation:slide-up 1.5s ease-in-out 2500ms;-moz-animation:slide-up 1.5s ease-in-out 2500ms;animation:slide-up 1.5s ease-in-out 2500ms;-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;animation-fill-mode:both}
+.game-message.game-won .mailing-list,.game-message.game-over .mailing-list{-webkit-animation:fade-in 1.5s ease-in-out 2500ms;-moz-animation:fade-in 1.5s ease-in-out 2500ms;animation:fade-in 1.5s ease-in-out 2500ms;-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;animation-fill-mode:both}
+.grid-container{position:absolute;z-index:1}
+.grid-row{margin-bottom:10px}
+.grid-row:last-child{margin-bottom:0}
+.grid-row:after{content:"";display:block;clear:both}
+.grid-cell{width:57.5px;height:57.5px;margin-right:10px;float:left;border-radius:3px;background:#eee4da59}
+.grid-cell:last-child{margin-right:0}
+.tile-container{position:absolute;z-index:2}
+.tile,.tile .tile-inner{width:58px;height:58px;line-height:67.5px}
+.tile.tile-position-1-1{-webkit-transform:translate(0px,0px);-moz-transform:translate(0px,0px);transform:translate(0px,0px)}
+.tile.tile-position-1-2{-webkit-transform:translate(0px,67px);-moz-transform:translate(0px,67px);transform:translate(0px,67px)}
+.tile.tile-position-1-3{-webkit-transform:translate(0px,135px);-moz-transform:translate(0px,135px);transform:translate(0px,135px)}
+.tile.tile-position-1-4{-webkit-transform:translate(0px,202px);-moz-transform:translate(0px,202px);transform:translate(0px,202px)}
+.tile.tile-position-2-1{-webkit-transform:translate(67px,0px);-moz-transform:translate(67px,0px);transform:translate(67px,0px)}
+.tile.tile-position-2-2{-webkit-transform:translate(67px,67px);-moz-transform:translate(67px,67px);transform:translate(67px,67px)}
+.tile.tile-position-2-3{-webkit-transform:translate(67px,135px);-moz-transform:translate(67px,135px);transform:translate(67px,135px)}
+.tile.tile-position-2-4{-webkit-transform:translate(67px,202px);-moz-transform:translate(67px,202px);transform:translate(67px,202px)}
+.tile.tile-position-3-1{-webkit-transform:translate(135px,0px);-moz-transform:translate(135px,0px);transform:translate(135px,0px)}
+.tile.tile-position-3-2{-webkit-transform:translate(135px,67px);-moz-transform:translate(135px,67px);transform:translate(135px,67px)}
+.tile.tile-position-3-3{-webkit-transform:translate(135px,135px);-moz-transform:translate(135px,135px);transform:translate(135px,135px)}
+.tile.tile-position-3-4{-webkit-transform:translate(135px,202px);-moz-transform:translate(135px,202px);transform:translate(135px,202px)}
+.tile.tile-position-4-1{-webkit-transform:translate(202px,0px);-moz-transform:translate(202px,0px);transform:translate(202px,0px)}
+.tile.tile-position-4-2{-webkit-transform:translate(202px,67px);-moz-transform:translate(202px,67px);transform:translate(202px,67px)}
+.tile.tile-position-4-3{-webkit-transform:translate(202px,135px);-moz-transform:translate(202px,135px);transform:translate(202px,135px)}
+.tile.tile-position-4-4{-webkit-transform:translate(202px,202px);-moz-transform:translate(202px,202px);transform:translate(202px,202px)}
+.tile .tile-inner{font-size:35px}
+.game-message{padding-top:0}
+.game-message p{font-size:30px!important;height:30px!important;line-height:30px!important;margin-top:32%!important;margin-bottom:0!important}
+.game-message .lower{margin-top:10px!important}
+.game-message.game-won .score-sharing{margin-top:10px}
+.game-message.game-over .mailing-list{margin-top:25px}
+.game-message .mailing-list{margin-top:10px}
+.game-message .mailing-list .mailing-list-email-field{width:180px}
+.sharing > iframe,.sharing > span,.sharing > form{display:block;margin:0 auto;margin-bottom:20px}
+}
+.block{display:flex;justify-content:center;align-items:center;margin:0 auto}
+.block-300{display:none;width:100%;height:250px;background-color:#8f7a66}
+.block-728{display:none;width:100%;max-width:728px;height:90px;background-color:#8f7a66}
+@media only screen and (max-width: 738px) {
+.block-300{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;margin-bottom:10px;border-radius:10px;margin-top:10px}
+.block-728{display:none}
+}
+@media only screen and (min-width: 739px) {
+.block-728{display:flex;justify-content:center;align-items:center;margin-bottom:10px;border-radius:10px;margin-top:10px}
+.block-300{display:none}
+}
+ul.unstyled.tips-and-tricks{list-style:none;padding:0;margin:30px auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:1200px}
+ul.unstyled.tips-and-tricks li{background:#e1e1e1;border-radius:10px;padding:16px;box-shadow:0 2px 6px #00000014;transition:transform .2s ease,box-shadow .2s ease;font-size:16px;line-height:1.5;color:#333}
+ul.unstyled.tips-and-tricks li:hover{transform:translateY(-4px);box-shadow:0 6px 12px #0000001f}
+@media (max-width: 600px) {
+ul.unstyled.tips-and-tricks{grid-template-columns:1fr}
+}
+@media (min-width: 601px) and (max-width: 992px) {
+ul.unstyled.tips-and-tricks{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+}
+@media (min-width: 993px) {
+ul.unstyled.tips-and-tricks{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+}
+</style>
+<link href="https://kaloodinaz.github.io/2048-mod/tiles-min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <div class="container">
+    <div class="heading">
+      <h1 class="title">Useless 2048</h1>
+      <div class="scores-container">
+        <div class="score-container">0</div>
+        <div class="best-container">0</div>
+      </div>
+    </div>
+
+    <div class="above-game">
+      <p class="game-intro">Just join the numbers & get the highest score in this page!</p>
+      <a class="restart-button">Play again</a>
+    </div>
+
+    <div class="game-container">
+      <div class="game-message">
+        <p></p>
+        <div class="lower">
+	        <a class="keep-playing-button">Keep playing</a>
+          <a class="retry-button">Play again</a>
+          <div class="score-sharing"></div>
+        </div>
+      </div>
+
+      <div class="grid-container">
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+      </div>
+
+      <div class="tile-container">
+
+      </div>
+    </div>
+
+      <hr>
+  <p class="game-explanation">
+      <strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong>
+    </p>
+    <hr>
+    <div class="block block-728"><script type="text/javascript">
+     atOptions = {
+       'key' : 'd1d26e15f7c349fd8e403bb5ea491a31',
+       'format' : 'iframe',
+       'height' : 90,
+       'width' : 728,
+       'params' : {}
+     };
+   </script>
+   <script type="text/javascript" src="//www.highperformanceformat.com/d1d26e15f7c349fd8e403bb5ea491a31/invoke.js"></script></div>
+       <hr>
+    
+<ul class="unstyled tips-and-tricks" style="text-align: center;">
+<li><a target="_blank" rel="noopener" href="https://kaloodinaz.github.io/2048-online/">2048 Online</a></li>
+<li class="even"><a target="_blank" rel="noopener" href="https://kaloodinaz.github.io/doge2048/">2048 Doge</a></li>
+<li><a target="_blank" rel="noopener" href="https://kaloodinaz.github.io/2048-3x3/">2048 3x3</a></li>
+<li class="even"><a target="_blank" rel="noopener" href="https://kaloodinaz.github.io/2048-5x5/">2048 5x5</a></li>
+<li><a target="_blank" rel="noopener" href="https://kaloodinaz.github.io/2048-6x6/">2048 6x6</a></li>
+<li class="even"><a target="_blank" rel="noopener" href="https://kaloodinaz.github.io/2048-flappy/">2048 Flappy</a></li>
+<li><a target="_blank" rel="noopener" href="https://kaloodinaz.github.io/2048-ai/">2048 vs AI</a></li>
+<li class="even"><a target="_blank" rel="noopener" href="https://kaloodinaz.github.io/2048-one-piece/">2048 One Piece</a></li>
+<li><a target="_blank" rel="noopener" href="https://kaloodinaz.github.io/2048-tetris/">2048 Tetris</a></li>
+<li class="even"><a target="_blank" rel="noopener" href="https://kaloodinaz.github.io/2048-minecraft/">2048 Minecraft</a></li>
+<li><a target="_blank" rel="noopener" href="https://kaloodinaz.github.io/2048-mario/">2048 Mario</a></li>
+<li class="even"><a target="_blank" rel="noopener" href="https://kaloodinaz.github.io/2048-reverse/">2048 Reverse</a></li>
+</ul>
+<hr>
+
+       <p><strong>2048 Useless</strong> is an extended version of the classic <a href="https://kaloodinaz.github.io/game/2048/" target="_blank">2048 game</a>, featuring a 4x4 grid instead of the standard 4x4 board. This variation allows for a more strategic approach to merging tiles, making it a great option for players who enjoy longer gameplay sessions.</p>
+    <hr>
+    <p>
+      This 4 x 4 fast paced version by <a target="_blank" href="https://kaloodinaz.github.io/">Kaloo Dinaz</a> was cloned from
+      the "non-official" <a target="_blank" href="https://kaloodinaz.github.io/2048-online/">2048 game</a> authored by
+      <a target="_blank" href="https://github.com/kaloodinaz/">Kaloo Dinaz</a>.
+    </p>
+  </div>
+
+<script src="https://cdn.counter.dev/script.js" data-id="74211804-62e3-41a8-9f09-2f1eac9640fb" data-utcoffset="2"></script>
+<script src="main.js?v=2.149"></script>
+
+</body>
+</html>
